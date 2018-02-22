@@ -7,6 +7,22 @@ use App\Customer;
 
 class CustomerController extends Controller
 {
+    protected $validationRules = [
+        // TODO: Implement other more specific rules where necessary
+        'customerName' => 'required',
+        'contactLastName' => 'required',
+        'contactFirstName' => 'required',
+        'phone' => 'required',
+        'addressLine1' => 'required',
+        //'addressLine2',
+        'city' => 'required',
+        'state' => 'required',
+        //'postalCode',
+        //'country',
+        //'salesRepEmployeeNumber',
+        //'creditLimit'
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +51,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = \Validator::make($request->all(), $this->validationRules);
+
+        if ($validator->fails()) {
+            return \Response::json([
+                'validationErrors' => $validator->errors()
+            ], 400);
+        }
+
+        $customer = Customer::create($request->all());
+
+        return response($customer->toJson(), 201);
     }
 
     /**
@@ -67,9 +93,20 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Customer $customer)
     {
-        //
+        // NOTE: If customer with ID not found, app automatically returns response with status code 404
+        $validator = \Validator::make($request->all(), $this->validationRules);
+
+        if ($validator->fails()) {
+            return \Response::json([
+                'validationErrors' => $validator->errors()
+            ], 400);
+        }
+
+        $customer->update($request->all());
+
+        return response('', 204);
     }
 
     /**
