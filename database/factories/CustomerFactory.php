@@ -7,7 +7,8 @@ $factory->define(App\Customer::class, function (Faker $faker) {
         'customerName' => $faker->company,
         'contactLastName' => $faker->lastName,
         'contactFirstName' => $faker->firstName,
-        'phone' => substr($faker->phoneNumber, 0, 12), // no extensions
+        // Since faker->phonenumber generates various formats, hard code for now
+        'phone' => '303-555-0100',
         'addressLine1' => $faker->streetAddress,
         'addressLine2' => null,
         'city' => $faker->city,
