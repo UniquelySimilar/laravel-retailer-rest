@@ -20,4 +20,11 @@ class Customer extends Model
         //'salesRepEmployeeNumber',
         'creditLimit'
     ];
+
+    protected $appends = array('contactFullName');
+
+    public function getContactFullNameAttribute()
+    {
+        return $this->contactLastName . ", " . $this->contactFirstName;
+    }
 }
