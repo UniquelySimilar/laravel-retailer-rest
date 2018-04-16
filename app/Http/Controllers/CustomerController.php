@@ -17,7 +17,7 @@ class CustomerController extends Controller
         //'addressLine2',
         'city' => 'required',
         'state' => 'required',
-        //'postalCode',
+        'postalCode' => 'required',
         //'country',
         //'salesRepEmployeeNumber',
         //'creditLimit'
